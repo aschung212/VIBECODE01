@@ -44,12 +44,24 @@
         </div>
       </a>
     </section>
+
+    <section class="weather-forecast-container">
+      <h2 class="weather-title">San Diego 7-Day Forecast</h2>
+      <div class="weather-hint" style="text-align:center; margin-bottom:0.5em; font-size:1.1em; color:#fffb00; font-family:Orbitron,Arial,sans-serif;">
+        <span style="background: linear-gradient(90deg, #ff00cc, #3333ff, #00ffd0, #fffb00); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight:bold;">Hint:</span> Click any day to open a Google Calendar event page for that date!
+      </div>
+      <div id="weather-forecast" class="weather-forecast-row">
+        <!-- Weather cards will be injected here by JS -->
+      </div>
+    </section>
+    </section>
     <section class="quote-container">
       <h1 class="quote">“AARON IS THE BEST”</h1>
       <p class="quote-attribution">— Donald Trump, August 24, 2025</p>
     </section>
     <script>
       (() => {
+        // Counter logic
         const btn = document.getElementById("counter-btn");
         const counter = document.getElementById("counter-value");
         const profilePic = document.getElementById("profile-pic");
@@ -95,6 +107,88 @@
         });
         // Ensure profile picture is greyed out on initial load
         updateCounter();
+
+        // Weather forecast logic
+        const weatherContainer = document.getElementById("weather-forecast");
+        // NWS API for San Diego gridpoint: https://api.weather.gov/gridpoints/SGX/55,20/forecast
+        const NWS_URL = "https://api.weather.gov/gridpoints/SGX/55,20/forecast";
+
+        function getDayName(dateStr) {
+          return new Date(dateStr).toLocaleDateString("en-US", { weekday: "short" });
+        }
+
+        function getIconUrl(iconUrl) {
+          return iconUrl;
+        }
+
+        function renderWeatherNWS(data) {
+          weatherContainer.innerHTML = "";
+          const periods = data.properties.periods.filter(p => p.isDaytime).slice(0, 7);
+          periods.forEach(async day => {
+            // Use local date for sunrise-sunset.org
+            const date = new Date(day.startTime);
+            const yyyy = date.getFullYear();
+            const mm = String(date.getMonth() + 1).padStart(2, '0');
+            const dd = String(date.getDate()).padStart(2, '0');
+            const yyyy_mm_dd = `${yyyy}-${mm}-${dd}`;
+            // San Diego coordinates
+            const lat = 32.7157;
+            const lon = -117.1611;
+            let sunrise = "";
+            let sunset = "";
+            try {
+              const sunRes = await fetch(`https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lon}&date=${yyyy_mm_dd}&formatted=1&tzid=America/Los_Angeles`);
+              const sunData = await sunRes.json();
+              sunrise = sunData.results.sunrise;
+              sunset = sunData.results.sunset;
+            } catch {
+              sunrise = "N/A";
+              sunset = "N/A";
+            }
+            const isToday = (new Date().toDateString() === date.toDateString());
+            const card = document.createElement("div");
+            card.className = "weather-card" + (isToday ? " today" : "");
+            const dateStr = date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+            card.innerHTML = `
+              ${isToday ? '<div class="weather-today-indicator">TODAY</div>' : ''}
+              <div class="weather-day">
+                <span class="weather-day-name">${getDayName(day.startTime)}</span>
+                <br>
+                <span class="weather-date">${dateStr}</span>
+              </div>
+              <img class="weather-icon" src="${getIconUrl(day.icon)}" alt="${day.shortForecast}" />
+              <div class="weather-temp">${day.temperature}°F</div>
+              <div class="weather-desc">${day.shortForecast}</div>
+              <div class="weather-info">
+                <span>Wind: ${day.windSpeed} ${day.windDirection}</span>
+                <span>${day.detailedForecast}</span>
+                <span class="weather-sunrise">Sunrise: ${sunrise}</span>
+                <span class="weather-sunset">Sunset: ${sunset}</span>
+              </div>
+            `;
+              // Add click event to open Google Calendar for the date
+              card.style.cursor = 'pointer';
+              card.addEventListener('click', () => {
+                // Get the date in YYYYMMDD format
+                const dateObj = new Date(day.startTime);
+                const year = dateObj.getFullYear();
+                const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+                const dayNum = String(dateObj.getDate()).padStart(2, '0');
+                const dateStr = `${year}${month}${dayNum}`;
+                // Google Calendar link for the day (all-day event)
+                const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&dates=${dateStr}/${dateStr}&details=San%20Diego%20Weather%20Forecast`;
+                window.open(gcalUrl, '_blank');
+              });
+            weatherContainer.appendChild(card);
+          });
+        }
+
+        fetch(NWS_URL)
+          .then(res => res.json())
+          .then(renderWeatherNWS)
+          .catch(() => {
+            weatherContainer.innerHTML = "<div class='weather-error'>Unable to load weather data from NWS.";
+          });
       })();
     </script>
   </body>

@@ -1,3 +1,136 @@
+.weather-card {
+  transition: transform 0.18s cubic-bezier(0.4, 0.2, 0.2, 1), box-shadow 0.18s;
+}
+.weather-card:hover {
+  transform: scale(1.12);
+  box-shadow: 0 0 32px #fffb00aa, 0 0 16px #ff00cc88;
+  z-index: 2;
+}
+/* Highlight for Today */
+.weather-card.today {
+  border: 3px solid #fffb00;
+  box-shadow: 0 0 24px #fffb00aa, 0 0 8px #fffb0044;
+  position: relative;
+}
+.weather-today-indicator {
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, #fffb00, #ff00cc);
+  color: #22223b;
+  font-weight: bold;
+  font-size: 1em;
+  padding: 4px 16px;
+  border-radius: 12px;
+  box-shadow: 0 0 8px #fffb00aa;
+  letter-spacing: 0.08em;
+  z-index: 2;
+}
+/* Sunrise/Sunset Styling */
+.weather-sunrise {
+  color: #fffb00;
+  font-weight: bold;
+}
+.weather-sunset {
+  color: #ff66cc;
+  font-weight: bold;
+}
+/* Weather Forecast Section */
+.weather-forecast-container {
+  margin-top: 2em;
+  margin-bottom: 2em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #22223b;
+  border-radius: 24px;
+  box-shadow: 0 0 24px #3333ff44, 0 0 8px #fffb0044;
+  padding: 2em 1em;
+  width: 100%;
+  max-width: 900px;
+}
+.weather-title {
+  font-size: 2.2em;
+  color: #fffb00;
+  font-family: "Orbitron", "Arial", sans-serif;
+  margin-bottom: 1em;
+  text-align: center;
+  background: linear-gradient(90deg, #ff00cc, #3333ff, #00ffd0, #fffb00);
+  background-size: 200% 100%;
+  animation: synthwave-flow 2s linear infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.weather-forecast-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 1.5em;
+  flex-wrap: wrap;
+  width: 100%;
+}
+.weather-card {
+  background: linear-gradient(135deg, #1a1a2e 60%, #3333ff 100%);
+  border-radius: 18px;
+  box-shadow: 0 0 12px #ff00cc44, 0 0 8px #fffb0044;
+  padding: 1em 1.2em;
+  min-width: 120px;
+  max-width: 140px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1em;
+  color: #fff;
+  font-family: "Orbitron", "Arial", sans-serif;
+}
+.weather-day {
+  font-size: 1.2em;
+  color: #ff00cc;
+  margin-bottom: 0.3em;
+  font-weight: bold;
+}
+.weather-icon {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 0.3em;
+}
+.weather-temp {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.weather-date {
+  display: block;
+  margin-top: 2px;
+  font-size: 1em;
+  font-weight: normal;
+}
+}
+.weather-desc {
+  font-size: 1em;
+  color: #00ffd0;
+  margin-bottom: 0.2em;
+}
+.weather-info {
+  font-size: 0.9em;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  align-items: center;
+}
+.weather-error {
+  color: #ff00cc;
+  font-size: 1.2em;
+  text-align: center;
+  margin-top: 1em;
+}
 body {
   min-height: 100vh;
   margin: 0;
@@ -105,6 +238,7 @@ body {
 .quote-container {
   text-align: center;
 }
+/* Animated synthwave gradient for quote and button */
 .quote {
   font-size: 4em;
   font-family: "Orbitron", "Arial", sans-serif;
@@ -118,6 +252,30 @@ body {
   letter-spacing: 0.1em;
   text-shadow: 0 0 20px #ff00cc88, 0 0 40px #3333ff44;
   margin: 0;
+}
+
+.counter-btn {
+  font-family: "Orbitron", "Arial", sans-serif;
+  background: linear-gradient(90deg, #ff00cc, #3333ff, #00ffd0, #fffb00);
+  background-size: 200% 100%;
+  animation: synthwave-flow 2s linear infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+  text-shadow: 0 0 12px #ff00cc88, 0 0 24px #3333ff44;
+  border: 2px solid #ff00cc;
+  border-radius: 16px;
+  padding: 12px 32px;
+  font-size: 2em;
+  margin-bottom: 1em;
+  cursor: pointer;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.counter-btn:hover {
+  box-shadow: 0 0 32px #fffb00aa, 0 0 16px #ff00cc88;
+  transform: scale(1.08);
 }
 @keyframes synthwave-flow {
   0% {
