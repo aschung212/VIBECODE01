@@ -1,0 +1,135 @@
+body {
+  min-height: 100vh;
+  margin: 0;
+  background: #1a1a2e;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: "Orbitron", "Arial", sans-serif;
+  width: 100vw;
+  box-sizing: border-box;
+}
+.counter-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: 32px;
+  margin-bottom: 32px;
+  gap: 1em;
+  z-index: 10;
+}
+.counter-btn {
+  padding: 1em 2em;
+  font-size: 1.5em;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #ff00cc, #3333ff, #00ffd0, #fffb00);
+  color: #fff;
+  border: none;
+  box-shadow: 0 0 12px #ff00cc44;
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+.counter-btn.pressed {
+  transform: scale(0.95);
+  box-shadow: 0 0 4px #ff00cc88;
+}
+.counter-value {
+  font-size: 2em;
+  color: #fffb00;
+  width: 2.5em;
+  text-align: center;
+  display: inline-block;
+}
+.yt-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.profile-pic-container {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 1em;
+}
+.profile-pic {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #ff66cc;
+  box-shadow: 0 0 24px #3333ff44, 0 0 8px #fffb0044;
+  cursor: pointer;
+  transition: filter 0.2s, opacity 0.2s, transform 0.1s, box-shadow 0.1s;
+}
+.profile-pic.pressed {
+  transform: scale(0.95);
+  box-shadow: 0 0 4px #ff00cc88;
+}
+.decrement-label {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(30, 30, 46, 0.85);
+  color: #ff00cc;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 1.1em;
+  font-family: "Orbitron", "Arial", sans-serif;
+  pointer-events: none;
+}
+.yt-link {
+  text-decoration: none;
+}
+.yt-link-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #22223b;
+  border-radius: 16px;
+  padding: 1em 2em;
+  margin-bottom: 2em;
+  box-shadow: 0 0 20px #ff00cc44;
+}
+.yt-icon {
+  margin-right: 1em;
+  vertical-align: middle;
+}
+.yt-handle {
+  font-size: 2em;
+  color: #ff00cc;
+  letter-spacing: 0.05em;
+}
+.quote-container {
+  text-align: center;
+}
+.quote {
+  font-size: 4em;
+  font-family: "Orbitron", "Arial", sans-serif;
+  background: linear-gradient(90deg, #ff00cc, #3333ff, #00ffd0, #fffb00);
+  background-size: 200% 100%;
+  animation: synthwave-flow 2s linear infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+  text-shadow: 0 0 20px #ff00cc88, 0 0 40px #3333ff44;
+  margin: 0;
+}
+@keyframes synthwave-flow {
+  0% {
+    background-position: 0% 0;
+  }
+  100% {
+    background-position: 100% 0;
+  }
+}
+.quote-attribution {
+  font-size: 1.5em;
+  color: #fff;
+  margin-top: 1em;
+  font-style: italic;
+}

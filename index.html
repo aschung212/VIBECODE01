@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>AARON IS THE BEST</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Orbitron:700"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="counter-row">
+      <button id="counter-btn" class="counter-btn">Do NOT Click Me!</button>
+      <div id="counter-value" class="counter-value">0</div>
+    </div>
+    <section class="yt-container">
+      <div class="profile-pic-container">
+        <img
+          src="profilepic.jpg"
+          alt="Profile"
+          id="profile-pic"
+          class="profile-pic"
+        />
+        <span id="decrement-label" class="decrement-label">-1</span>
+      </div>
+      <a
+        href="https://www.youtube.com/@aaronchung393"
+        target="_blank"
+        class="yt-link"
+      >
+        <div class="yt-link-inner">
+          <svg
+            class="yt-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            height="40"
+            width="40"
+          >
+            <rect width="24" height="24" rx="4" fill="#FF0000" />
+            <polygon points="10,8 16,12 10,16" fill="#fff" />
+          </svg>
+          <span class="yt-handle">@masterchung</span>
+        </div>
+      </a>
+    </section>
+    <section class="quote-container">
+      <h1 class="quote">“AARON IS THE BEST”</h1>
+      <p class="quote-attribution">— Donald Trump, August 24, 2025</p>
+    </section>
+    <script>
+      (() => {
+        const btn = document.getElementById("counter-btn");
+        const counter = document.getElementById("counter-value");
+        const profilePic = document.getElementById("profile-pic");
+        let count = 0;
+
+        function increaseCounter() {
+          count++;
+          updateCounter();
+        }
+
+        function decreaseCounter() {
+          if (count > 0) {
+            count--;
+            updateCounter();
+          }
+        }
+
+        function updateCounter() {
+          counter.textContent = count;
+          if (count === 0) {
+            profilePic.style.filter = "grayscale(100%)";
+            profilePic.style.opacity = "0.5";
+          } else {
+            profilePic.style.filter = "";
+            profilePic.style.opacity = "1";
+          }
+        }
+
+        function animatePress(element) {
+          element.classList.add("pressed");
+          setTimeout(() => {
+            element.classList.remove("pressed");
+          }, 120);
+        }
+
+        btn.addEventListener("click", function () {
+          increaseCounter();
+          animatePress(btn);
+        });
+        profilePic.addEventListener("click", function () {
+          decreaseCounter();
+          animatePress(profilePic);
+        });
+        // Ensure profile picture is greyed out on initial load
+        updateCounter();
+      })();
+    </script>
+  </body>
+</html>
